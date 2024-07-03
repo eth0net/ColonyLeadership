@@ -1,4 +1,4 @@
-# Colony Leadership
+# ![Colony Leadership](./About/Preview.png)
 
 Choose a pawn to lead your colony!
 
