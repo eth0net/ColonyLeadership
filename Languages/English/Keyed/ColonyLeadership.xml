@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <ColonyLeadership>Colony Leadership</ColonyLeadership>
-  <ColonyLeadership.ResetSettings>Reset Settings</ColonyLeadership.ResetSettings>
+    <ColonyLeadership>Colony Leadership</ColonyLeadership>
+    <ColonyLeadership.ResetSettings>Reset Settings</ColonyLeadership.ResetSettings>
+
+    <ColonyLeadership.NoLeader>No colony leader</ColonyLeadership.NoLeader>
+    <ColonyLeadership.NoLeaderDesc>There is no assigned colony leader.\n\nYou can assign someone to lead the colony on their Social tab.</ColonyLeadership.NoLeaderDesc>
 
 </LanguageData>
