@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>ColonyLeadershipGained</defName>
+    <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipGained</thoughtClass>
+    <durationDays>7</durationDays>
+    <stages>
+      <li>
+        <label>Gained colony leadership</label>
+        <description>I am now the leader of the colony.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>ColonyLeadershipLost</defName>
+    <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipLost</thoughtClass>
+    <durationDays>7</durationDays>
+    <stages>
+      <li>
+        <label>Lost colony leadership</label>
+        <description>I am no longer the leader of the colony.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>
