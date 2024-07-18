@@ -31,7 +31,19 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
 
     private bool HasActiveLeader => _leader is { Dead: false, Downed: false, IsPrisoner: false, IsSlave: false };
 
-    public bool ThoughtActive => _tickManager.TicksGame - _lastTickWithActiveLeader >= TicksWithoutLeaderForThought;
+    public bool NoLeaderThoughtActive =>
+        _tickManager.TicksGame - _lastTickWithActiveLeader >= TicksWithoutLeaderForThought;
+
+    public void Notify_LeaderDied()
+    {
+        var memory = ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeaderDied, 0);
+        Find.CurrentMap?.mapPawns?.FreeColonistsAndPrisonersSpawned?.ForEach(pawn =>
+        {
+            if (pawn.Faction is { IsPlayer: false }) return;
+            if (pawn == Leader) return;
+            pawn.needs.mood.thoughts.memories.TryGainMemory(memory);
+        });
+    }
 
     public override void GameComponentTick()
     {

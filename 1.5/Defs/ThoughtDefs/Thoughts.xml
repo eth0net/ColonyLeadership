@@ -34,6 +34,18 @@
   </ThoughtDef>
 
   <ThoughtDef>
+    <defName>ColonyLeaderDied</defName>
+    <durationDays>6</durationDays>
+    <stages>
+      <li>
+        <label>Colony leader died</label>
+        <description>The colony leader has died.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
     <defName>NoColonyLeader</defName>
     <workerClass>ColonyLeadership.ThoughtWorker_NoColonyLeader</workerClass>
     <validWhileDespawned>true</validWhileDespawned>

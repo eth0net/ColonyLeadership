@@ -14,6 +14,6 @@ public class ThoughtWorker_NoColonyLeader : ThoughtWorker
 
         var comp = Current.Game.GetComponent<GameComponent_ColonyLeadership>();
 
-        return comp.ThoughtActive;
+        return comp.NoLeaderThoughtActive;
     }
 }

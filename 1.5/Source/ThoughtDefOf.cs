@@ -9,4 +9,5 @@ public static class ThoughtDefOf
 {
     public static ThoughtDef ColonyLeadershipGained;
     public static ThoughtDef ColonyLeadershipLost;
+    public static ThoughtDef ColonyLeaderDied;
 }
