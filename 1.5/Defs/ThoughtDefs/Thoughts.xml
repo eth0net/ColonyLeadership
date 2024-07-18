@@ -33,4 +33,17 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>NoColonyLeader</defName>
+    <workerClass>ColonyLeadership.ThoughtWorker_NoColonyLeader</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <label>No colony leader</label>
+        <description>There is no leader in the colony.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
