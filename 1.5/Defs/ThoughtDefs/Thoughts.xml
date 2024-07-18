@@ -5,6 +5,9 @@
     <defName>ColonyLeadershipGained</defName>
     <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipGained</thoughtClass>
     <durationDays>7</durationDays>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
     <stages>
       <li>
         <label>Gained colony leadership</label>
@@ -18,6 +21,9 @@
     <defName>ColonyLeadershipLost</defName>
     <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipLost</thoughtClass>
     <durationDays>7</durationDays>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
     <stages>
       <li>
         <label>Lost colony leadership</label>
