@@ -21,11 +21,9 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
         get => _leader;
         set
         {
-            _leader?.needs.mood.thoughts.memories.TryGainMemory(
-                ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipLost, 0));
+            TryRemoveLeaderEffects();
             _leader = value;
-            _leader?.needs.mood.thoughts.memories.TryGainMemory(
-                ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipGained, 0));
+            TryAddLeaderEffects();
         }
     }
 
@@ -34,15 +32,40 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
     public bool NoLeaderThoughtActive =>
         _tickManager.TicksGame - _lastTickWithActiveLeader >= TicksWithoutLeaderForThought;
 
+    private void TryAddLeaderEffects()
+    {
+        if (_leader == null) return;
+
+        _leader.health.AddHediff(HediffDefOf.ColonyLeader);
+
+        var memories = _leader.needs.mood.thoughts.memories;
+        memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipGained, 0));
+        memories.RemoveMemoriesOfDef(ThoughtDefOf.ColonyLeadershipLost);
+    }
+
+    private void TryRemoveLeaderEffects()
+    {
+        if (_leader == null) return;
+
+        var hediff = _leader.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.ColonyLeader);
+        if (hediff != null) _leader.health.RemoveHediff(hediff);
+
+        var memories = _leader.needs.mood.thoughts.memories;
+        memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipLost, 0));
+        memories.RemoveMemoriesOfDef(ThoughtDefOf.ColonyLeadershipGained);
+    }
+
     public void Notify_LeaderDied()
     {
         var memory = ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeaderDied, 0);
-        Find.CurrentMap?.mapPawns?.FreeColonistsAndPrisonersSpawned?.ForEach(pawn =>
-        {
-            if (pawn.Faction is { IsPlayer: false }) return;
-            if (pawn == Leader) return;
-            pawn.needs.mood.thoughts.memories.TryGainMemory(memory);
-        });
+        Find.CurrentMap?.mapPawns?.FreeColonistsAndPrisonersSpawned?.ForEach(
+            pawn =>
+            {
+                if (pawn.Faction is { IsPlayer: false }) return;
+                if (pawn == Leader) return;
+                pawn.needs.mood.thoughts.memories.TryGainMemory(memory);
+            }
+        );
     }
 
     public override void GameComponentTick()
