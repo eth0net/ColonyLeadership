@@ -73,16 +73,16 @@ public static class Harmony_CharacterCardUtility_DrawCharacterCard
 #if DEBUG
             Log.Warning("Showing make leader button for " + pawn.Name);
 #endif
-            TooltipHandler.TipRegionByKey(rect, "MakeLeader");
-            if (Widgets.ButtonImage(rect, TexButton.ReorderUp)) comp.Leader = pawn;
+            TooltipHandler.TipRegionByKey(rect, "ColonyLeadership.MakeLeader");
+            if (Widgets.ButtonImage(rect, Icons.Triangle)) comp.Leader = pawn;
         }
         else
         {
 #if DEBUG
             Log.Warning("Showing leader texture for " + pawn.Name);
 #endif
-            TooltipHandler.TipRegionByKey(rect, "Leader");
-            GUI.DrawTexture(rect, TexButton.ReorderDown);
+            TooltipHandler.TipRegionByKey(rect, "ColonyLeadership.Leader");
+            GUI.DrawTexture(rect, Icons.Star);
         }
     }
 }
