@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using RimWorld;
 using Verse;
 
 namespace ColonyLeadership;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
 public class Alert_ColonyLeadership : Alert
 {
 #if DEBUG

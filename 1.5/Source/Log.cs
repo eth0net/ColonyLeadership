@@ -1,5 +1,9 @@
-﻿namespace ColonyLeadership;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace ColonyLeadership;
+
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 internal static class Log
 {
     private const string Prefix = "[ColonyLeadership] ";
