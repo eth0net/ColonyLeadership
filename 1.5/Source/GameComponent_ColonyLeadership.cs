@@ -23,6 +23,7 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
         {
             TryRemoveLeaderEffects();
             _leader = value;
+            Faction.OfPlayer.leader = value;
             TryAddLeaderEffects();
         }
     }
