@@ -22,9 +22,22 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
         set
         {
             TryRemoveLeaderEffects();
+            var comp = LeaderComp ?? new CompColonyLeader();
             _leader = value;
             Faction.OfPlayer.leader = value;
             TryAddLeaderEffects();
+            LeaderComp = comp;
+        }
+    }
+
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public CompColonyLeader LeaderComp
+    {
+        get => Leader.GetComp<CompColonyLeader>();
+        set
+        {
+            if (Leader?.HasComp<CompColonyLeader>() == true) return;
+            Leader?.comps?.Add(value);
         }
     }
 
@@ -37,7 +50,7 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
     {
         if (_leader == null) return;
 
-        _leader.health.AddHediff(HediffDefOf.ColonyLeader);
+        // _leader.health.AddHediff(HediffDefOf.ColonyLeader);
 
         var memories = _leader.needs.mood.thoughts.memories;
         memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipGained, 0));
@@ -48,8 +61,8 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
     {
         if (_leader == null) return;
 
-        var hediff = _leader.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.ColonyLeader);
-        if (hediff != null) _leader.health.RemoveHediff(hediff);
+        // var hediff = _leader.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.ColonyLeader);
+        // if (hediff != null) _leader.health.RemoveHediff(hediff);
 
         var memories = _leader.needs.mood.thoughts.memories;
         memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipLost, 0));
