@@ -1,28 +1,63 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using RimWorld;
 using Verse;
 
 namespace ColonyLeadership;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class CompColonyLeader : ThingComp
 {
-    private readonly List<StatModifier> _statFactors =
-    [
-        new StatModifier { stat = StatDefOf.SocialImpact, value = 1.25f },
-        new StatModifier { stat = StatDefOf.TradePriceImprovement, value = 1.25f }
-    ];
+    public CompColonyLeader()
+    {
+        props = new CompProperties_ColonyLeader();
+    }
+
+    public CompProperties_ColonyLeader Props => (CompProperties_ColonyLeader)props;
+
+    public IEnumerable<StatModifier> StatFactors => Props.statFactors;
 
     public override float GetStatFactor(StatDef stat)
     {
         var factor = base.GetStatFactor(stat);
 
-        foreach (var statModifier in _statFactors)
+        foreach (var statFactor in StatFactors)
         {
-            if (statModifier.stat != stat) continue;
-            factor *= statModifier.value;
-            Log.Message($"Applying {statModifier.value} factor to {stat}");
+            if (statFactor.stat != stat) continue;
+            factor *= statFactor.value;
+            Log.Message($"Applying {statFactor.value} factor to {stat}");
         }
 
         return factor;
+    }
+
+    public override void GetStatsExplanation(StatDef stat, StringBuilder sb)
+    {
+        base.GetStatsExplanation(stat, sb);
+        foreach (var statFactor in StatFactors)
+        {
+            if (statFactor.stat != stat) continue;
+            var prefix = "ColonyLeadership.Leader".Translate();
+            var factor = statFactor.value.ToStringByStyle(stat.toStringStyle, ToStringNumberSense.Factor);
+            sb.AppendLine($"{prefix}: {factor}");
+        }
+    }
+}
+
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+public class CompProperties_ColonyLeader : CompProperties
+{
+    public readonly List<StatModifier> statFactors =
+    [
+        new StatModifier { stat = StatDefOf.SocialImpact, value = 1.25f },
+        new StatModifier { stat = StatDefOf.TradePriceImprovement, value = 1.25f }
+    ];
+
+    public CompProperties_ColonyLeader()
+    {
+        compClass = typeof(CompColonyLeader);
     }
 }

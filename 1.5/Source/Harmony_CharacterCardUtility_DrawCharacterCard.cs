@@ -51,36 +51,22 @@ public static class Harmony_CharacterCardUtility_DrawCharacterCard
             newCodes.Add(current);
         }
 
-#if DEBUG
-        Log.Warning("Original codes:\n\n" + string.Join("\n", codes.Select(code => code.ToString())));
-        Log.Warning("Transpiler finished:\n\n" + string.Join("\n", newCodes.Select(code => code.ToString())));
-#endif
-
         return newCodes;
     }
 
     // todo: investigate weird behavior with Dialog_CreateStartingPawns
     public static void DrawLeaderButton(Pawn pawn, float x)
     {
-#if DEBUG
-        Log.Warning("Drawing leader button for " + pawn.Name);
-#endif
         var rect = new Rect(x, 0f, 30f, 30f);
         var comp = Current.Game.GetComponent<GameComponent_ColonyLeadership>();
         var leader = comp.Leader;
         if (leader != pawn)
         {
-#if DEBUG
-            Log.Warning("Showing make leader button for " + pawn.Name);
-#endif
             TooltipHandler.TipRegionByKey(rect, "ColonyLeadership.MakeLeader");
             if (Widgets.ButtonImage(rect, Icons.Triangle)) comp.Leader = pawn;
         }
         else
         {
-#if DEBUG
-            Log.Warning("Showing leader texture for " + pawn.Name);
-#endif
             TooltipHandler.TipRegionByKey(rect, "ColonyLeadership.Leader");
             GUI.DrawTexture(rect, Icons.Star);
         }
