@@ -26,7 +26,6 @@ public class CompColonyLeader : ThingComp
         {
             if (statFactor.stat != stat) continue;
             factor *= statFactor.value;
-            Log.Message($"Applying {statFactor.value} factor to {stat}");
         }
 
         return factor;

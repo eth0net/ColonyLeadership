@@ -21,23 +21,12 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
         get => _leader;
         set
         {
-            TryRemoveLeaderEffects();
-            var comp = LeaderComp ?? new CompColonyLeader();
+            var comp = ExtractOrCreateLeaderComp();
+            RemoveLeaderThoughts();
             _leader = value;
             Faction.OfPlayer.leader = value;
-            TryAddLeaderEffects();
-            LeaderComp = comp;
-        }
-    }
-
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public CompColonyLeader LeaderComp
-    {
-        get => Leader.GetComp<CompColonyLeader>();
-        set
-        {
-            if (Leader?.HasComp<CompColonyLeader>() == true) return;
-            Leader?.comps?.Add(value);
+            AddLeaderThoughts();
+            AssignLeaderComp(comp);
         }
     }
 
@@ -46,27 +35,35 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
     public bool NoLeaderThoughtActive =>
         _tickManager.TicksGame - _lastTickWithActiveLeader >= TicksWithoutLeaderForThought;
 
-    private void TryAddLeaderEffects()
+    private void AddLeaderThoughts()
     {
-        if (_leader == null) return;
+        if (Leader == null) return;
 
-        // _leader.health.AddHediff(HediffDefOf.ColonyLeader);
-
-        var memories = _leader.needs.mood.thoughts.memories;
+        var memories = Leader.needs.mood.thoughts.memories;
         memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipGained, 0));
         memories.RemoveMemoriesOfDef(ThoughtDefOf.ColonyLeadershipLost);
     }
 
-    private void TryRemoveLeaderEffects()
+    private void RemoveLeaderThoughts()
     {
-        if (_leader == null) return;
+        if (Leader == null) return;
 
-        // var hediff = _leader.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.ColonyLeader);
-        // if (hediff != null) _leader.health.RemoveHediff(hediff);
-
-        var memories = _leader.needs.mood.thoughts.memories;
+        var memories = Leader.needs.mood.thoughts.memories;
         memories.TryGainMemory(ThoughtMaker.MakeThought(ThoughtDefOf.ColonyLeadershipLost, 0));
         memories.RemoveMemoriesOfDef(ThoughtDefOf.ColonyLeadershipGained);
+    }
+
+    private void AssignLeaderComp( CompColonyLeader leaderComp)
+    {
+        Leader?.comps?.RemoveWhere(comp => comp is CompColonyLeader);
+        Leader?.comps?.Add(leaderComp);
+    }
+
+    private CompColonyLeader ExtractOrCreateLeaderComp()
+    {
+        var leaderComp = Leader?.GetComp<CompColonyLeader>();
+        Leader?.comps?.RemoveWhere(comp => comp is CompColonyLeader);
+        return leaderComp ?? new CompColonyLeader();
     }
 
     public void Notify_LeaderDied()
@@ -97,6 +94,7 @@ public class GameComponent_ColonyLeadership(Game game) : GameComponent
     public override void ExposeData()
     {
         base.ExposeData();
+        Scribe_Values.Look(ref _lastTickWithActiveLeader, "lastTickWithActiveLeader");
         Scribe_References.Look(ref _leader, "leader");
     }
 }
