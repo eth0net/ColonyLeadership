@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>ColonyLeadershipGained</defName>
+    <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipGained</thoughtClass>
+    <durationDays>7</durationDays>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
+    <stages>
+      <li>
+        <label>Gained colony leadership</label>
+        <description>I am now the leader of the colony.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>ColonyLeadershipLost</defName>
+    <thoughtClass>ColonyLeadership.Thought_ColonyLeadershipLost</thoughtClass>
+    <durationDays>7</durationDays>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
+    <stages>
+      <li>
+        <label>Lost colony leadership</label>
+        <description>I am no longer the leader of the colony.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>ColonyLeaderDied</defName>
+    <durationDays>6</durationDays>
+    <stages>
+      <li>
+        <label>Colony leader died</label>
+        <description>The colony leader has died.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NoColonyLeader</defName>
+    <workerClass>ColonyLeadership.ThoughtWorker_NoColonyLeader</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <label>No colony leader</label>
+        <description>There is no leader in the colony.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>
